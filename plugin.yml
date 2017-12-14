@@ -1,0 +1,4 @@
+name: MainLobby
+main: net.omniblock.lobbies.main.MainLobbyPlugin
+softdepend: [OmniNetwork, OmniLobbies, HolographicDisplays, Citizens]
+version: 1.9.5
