@@ -83,7 +83,7 @@ public class MainLobby extends CommonLobby {
 			
 		}
 		
-		this.setSpawnPoint(new Location(this.getWorld().getBukkitWorld(), 0.5, 51, 0.5, -90, (float) 0 ));
+		this.setSpawnPoint(new Location(this.getWorld().getBukkitWorld(), 0.5, 52, 0.5, -90, (float) 0 ));
 		return;
 		
 	}
