@@ -106,12 +106,8 @@ public class MainLobby extends CommonLobby {
 	@Override
 	public void giveItems(Player player) {
 		
-		for(GeneralLobbyItem item : GeneralLobbyItem.values()){
-			
-			player.getInventory().setItem(item.getSlot(), item.getBuilder().build());
-			continue;
-			
-		}
+		for(GeneralLobbyItem item : GeneralLobbyItem.values())
+			item.addItem(player);
 		
 	}
 
