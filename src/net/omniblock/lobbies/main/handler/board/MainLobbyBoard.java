@@ -4,10 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.omniblock.lobbies.api.object.LobbyBoard;
-import net.omniblock.lobbies.main.handler.base.BetaKeyBase;
 import net.omniblock.network.handlers.base.bases.type.BankBase;
+import net.omniblock.network.handlers.base.bases.type.RankBase;
 import net.omniblock.network.library.helpers.scoreboard.ScoreboardUtil;
 import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.network.systems.rank.type.RankType;
 
 public class MainLobbyBoard implements LobbyBoard {
 
@@ -26,6 +27,8 @@ public class MainLobbyBoard implements LobbyBoard {
 		
 		for(Player player : Bukkit.getOnlinePlayers()){
 			
+			RankType rank = RankBase.getRank(player);
+			
 			ScoreboardUtil.unrankedSidebarDisplay(
 					player, 
 					new String[] { 
@@ -34,8 +37,8 @@ public class MainLobbyBoard implements LobbyBoard {
 								   TextUtil.format("&7OmniCoins: &b" + BankBase.getMoney(player)),
 								   TextUtil.format("&7Nivel: &b" + BankBase.getLevel(player)),
 								   TextUtil.format("   "),
-								   TextUtil.format("&7Fase: &6&lBETA KEYS"),
-								   TextUtil.format("&7Tu Key: &a#" + BetaKeyBase.getKey(player.getName())),
+								   TextUtil.format("&7Fase: &a&lBETA ABIERTA"),
+								   TextUtil.format("&7Rango: &8" + (rank == RankType.USER ? "&8(&7Usuario&8)" : rank.getPrefix())),
 								   TextUtil.format("    "),
 								   TextUtil.format("&ewww.omniblock.net")}, false);
 			

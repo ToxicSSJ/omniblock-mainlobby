@@ -8,12 +8,20 @@ import java.util.Map;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import net.citizensnpcs.api.CitizensAPI;
 import net.omniblock.lobbies.OmniLobbies;
@@ -106,6 +114,9 @@ public class MainLobby extends CommonLobby {
 	@Override
 	public void giveItems(Player player) {
 		
+		GeneralLobbyItem.SEE_PLAYERS.setSlot(8);
+		GeneralLobbyItem.HIDE_PLAYERS.setSlot(8);
+		
 		for(GeneralLobbyItem item : GeneralLobbyItem.values())
 			item.addItem(player);
 		
@@ -182,6 +193,53 @@ public class MainLobby extends CommonLobby {
 				giveItems(e.getPlayer());
 				teleportPlayer(e.getPlayer());
 				
+			}
+			
+			@EventHandler
+			public void onPressurePlate(PlayerInteractEvent e) {
+				
+				if(e.getAction() != Action.PHYSICAL)
+					return;
+				
+				if(e.getClickedBlock().getType() == Material.IRON_PLATE) {
+					
+					Block relative = e.getClickedBlock();
+					
+					for(int i = 0; i < 10; i++)
+						relative = relative.getRelative(BlockFace.EAST);
+					
+					relative = relative.getLocation().add(0, 7, 0).getBlock();
+					
+					e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_BLAZE_HURT, 5, -5);
+					pushPlayer(e.getPlayer(), relative.getLocation());
+					return;
+					
+				}
+				
+			}
+			
+			@EventHandler
+			public void onDrag(InventoryDragEvent e) {
+				e.setCancelled(true);
+			}
+			
+			@EventHandler
+			public void onClick(InventoryClickEvent e) {
+				e.setCancelled(true);
+			}
+			
+			public void pushPlayer(Player player, Location to) {
+
+				double multiply = 10.5;
+
+				Location loc = player.getLocation();
+				double x = loc.getX() - (to.getX() + 0.5);
+				double y = loc.getY() - to.getY();
+				double z = loc.getZ() - (to.getZ() + 0.5);
+
+				Vector v = new Vector(x, y + 2.5, z).normalize().multiply(-multiply);
+				player.setVelocity(v);
+
 			}
 			
 		};
