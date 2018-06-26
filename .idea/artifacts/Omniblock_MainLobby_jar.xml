@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Omniblock-MainLobby:jar">
+    <output-path>$PROJECT_DIR$/../CompiledJars</output-path>
+    <root id="archive" name="Omniblock-MainLobby.jar">
+      <element id="module-output" name="Omniblock-MainLobby" />
+    </root>
+  </artifact>
+</component>
