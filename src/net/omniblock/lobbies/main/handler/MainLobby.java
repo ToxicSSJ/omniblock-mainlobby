@@ -140,6 +140,7 @@ public class MainLobby extends CommonLobby {
 				return new HashMap<String, Material>() {{
 					
 				    put("SKYWARS_TP", Material.BOW);
+				    put("SURVIVAL_TP", Material.GRASS);
 				    put("COMING_SOON", Material.COAL_BLOCK);
 				    
 				}};

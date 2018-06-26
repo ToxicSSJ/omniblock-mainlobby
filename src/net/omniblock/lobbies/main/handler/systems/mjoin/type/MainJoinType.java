@@ -25,6 +25,7 @@ import net.omniblock.packets.object.external.ServerType;
 public enum MainJoinType {
 
 	SKYWARS("&a&lSKYWARS", "ColdCrawL", ServerType.SKYWARS_LOBBY_SERVER, 90, -1),
+	SURVIVAL("&a&lSURVIVAL", "ColdCrawL", ServerType.SURVIVAL, 90, -1),
 	COMING_SOON("&c&lPRÓXIMAMENTE", "Im_a_Stone", null, 90, -1),
 	
 	;
@@ -54,50 +55,6 @@ public enum MainJoinType {
 		faceLoc.setYaw(yaw);
 		faceLoc.setPitch(pitch);
 		
-		if(this == COMING_SOON) {
-			
-			NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, modeSkin);
-			Hologram hologram = HologramsAPI.createHologram(OmniLobbies.getInstance(), loc.clone().add(0, 2.5, 0));
-			
-			npc.spawn(faceLoc);
-			npc.setName(TextUtil.format(modeName));
-			npc.data().set(NPC.PLAYER_SKIN_UUID_METADATA, modeSkin);
-			
-			LobbyNPC.registerActioner(npc, new NPCActioner() {
-
-				@Override
-				public void execute(NPC npc, Player player) {
-					
-					player.sendMessage(TextUtil.format("&6Proximamente..."));
-					return;
-					
-				}
-				
-			});
-			
-			new BukkitRunnable() {
-				
-				@Override
-				public void run() {
-					
-					if(!npc.isSpawned()) {
-						
-						this.cancel();
-						return;
-						
-					}
-					
-					npc.data().set(NPC.PLAYER_SKIN_UUID_METADATA, modeSkin);
-					return;
-					
-				}
-				
-			}.runTaskTimer(OmniLobbies.getInstance(), 80L, 20 * 120);
-			
-			return new AbstractMap.SimpleEntry<NPC, Hologram>(npc, hologram);
-			
-		}
-		
 		NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, modeSkin);
 		Hologram hologram = HologramsAPI.createHologram(OmniLobbies.getInstance(), loc.clone().add(0, 2.7, 0));
 		
@@ -112,7 +69,7 @@ public enum MainJoinType {
 			@Override
 			public void execute(NPC npc, Player player) {
 				
-				player.sendMessage(TextUtil.format("&bConectandote a Skywars..."));
+				player.sendMessage(TextUtil.format("&bConectandote al servidor..."));
 				
 				Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
 						.setPlayername(player.getName())

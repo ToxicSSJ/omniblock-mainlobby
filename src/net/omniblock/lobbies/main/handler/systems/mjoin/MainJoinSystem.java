@@ -35,6 +35,7 @@ public class MainJoinSystem implements LobbySystem {
 			return;
 		
 		lobby.getLastScan().get("SKYWARS_TP").forEach(location -> displayedEntries.add(MainJoinType.SKYWARS.spawnJoin(location)));
+		lobby.getLastScan().get("SURVIVAL_TP").forEach(location -> displayedEntries.add(MainJoinType.SURVIVAL.spawnJoin(location)));
 		lobby.getLastScan().get("COMING_SOON").forEach(location -> displayedEntries.add(MainJoinType.COMING_SOON.spawnJoin(location)));
 		
 	}
